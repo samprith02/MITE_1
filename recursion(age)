@@ -1,0 +1,33 @@
+
+
+#include <stdio.h>
+
+void displayAges(int* ages,int length,int index)
+{
+    if(index>=length)
+    return;
+    printf("%d\t",ages[index]);
+    displayAges(ages,length,index+1);
+  
+    }
+    
+void displayAgesBack(int* ages,int length,int index)
+{
+    if(index>=length)
+    return;
+   
+    displayAgesBack(ages,length,index+1);
+     printf("%d\t",ages[index]);
+  
+    }
+    
+
+int main()
+{
+    int ages[]={45,42,14,20,70};
+    displayAges(ages,5,0);
+    printf("\n");
+    displayAgesBack(ages,5,0);
+
+    return 0;
+}
