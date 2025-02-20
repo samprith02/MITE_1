@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Define the Employee structure
+struct Employee {
+    int ID;
+    char name[50];
+    float salary;
+};
+
+// Function to write employee records to a file
+void writeToFile(struct Employee emp[], int n) {
+    FILE *file = fopen("employees.txt", "w");
+    if (file == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    for (int i = 0; i < n; i++) {
+        fprintf(file, "%d %s %.2f\n", emp[i].ID, emp[i].name, emp[i].salary);
+    }
+
+    fclose(file);
+}
+
+// Function to read employee records from a file
+void readFromFile() {
+    FILE *file = fopen("employees.txt", "r");
+    if (file == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+
+    struct Employee emp;
+    while (fscanf(file, "%d %s %f", &emp.ID, emp.name, &emp.salary) != EOF) {
+        printf("ID: %d, Name: %s, Salary: %.2f\n", emp.ID, emp.name, emp.salary);
+    }
+
+    fclose(file);
+}
+
+int main() {
+    int N;
+    printf("Enter the number of employees: ");
+    scanf("%d", &N);
+
+    struct Employee employees[N];
+
+    // Read details for each employee
+    for (int i = 0; i < N; i++) {
+        printf("\nEnter details for Employee %d:\n", i + 1);
+        printf("Enter Employee ID: ");
+        scanf("%d", &employees[i].ID);
+        printf("Enter Employee Name: ");
+        scanf("%s", employees[i].name);
+        printf("Enter Employee Salary: ");
+        scanf("%f", &employees[i].salary);
+    }
+
+    // Write employee details to the file
+    writeToFile(employees, N);
+
+    // Read and display employee details from the file
+    printf("\nEmployee details from the file:\n");
+    readFromFile();
+
+    return 0;
+}
