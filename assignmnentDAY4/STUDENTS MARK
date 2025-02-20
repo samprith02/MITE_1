@@ -1,0 +1,80 @@
+#include <stdio.h>
+
+// Define the Marks structure
+struct Marks {
+    int subject1;
+    int subject2;
+    int subject3;
+};
+
+// Define the Student structure
+struct Student {
+    int ID;
+    char name[50];
+    struct Marks marks;
+    int total;
+    float average;
+    char grade;
+};
+
+// Function to read student details
+void readStudentDetails(struct Student* student) {
+    printf("Enter Student ID: ");
+    scanf("%d", &student->ID);
+    printf("Enter Student Name: ");
+    scanf("%s", student->name);
+    printf("Enter Marks for Subject 1: ");
+    scanf("%d", &student->marks.subject1);
+    printf("Enter Marks for Subject 2: ");
+    scanf("%d", &student->marks.subject2);
+    printf("Enter Marks for Subject 3: ");
+    scanf("%d", &student->marks.subject3);
+}
+
+// Function to compute total marks, average, and grade
+void computeResults(struct Student* student) {
+    student->total = student->marks.subject1 + student->marks.subject2 + student->marks.subject3;
+    student->average = student->total / 3.0;
+    if (student->average >= 90)
+        student->grade = 'A';
+    else if (student->average >= 75)
+        student->grade = 'B';
+    else if (student->average >= 60)
+        student->grade = 'C';
+    else if (student->average >= 50)
+        student->grade = 'D';
+    else
+        student->grade = 'F';
+}
+
+// Function to display student details
+void displayStudentDetails(struct Student student) {
+    printf("\nStudent ID: %d\n", student.ID);
+    printf("Student Name: %s\n", student.name);
+    printf("Total Marks: %d\n", student.total);
+    printf("Average Marks: %.2f\n", student.average);
+    printf("Grade: %c\n", student.grade);
+}
+
+int main() {
+    int N;
+    printf("Enter the number of students: ");
+    scanf("%d", &N);
+
+    struct Student students[N];
+
+    // Read details for each student
+    for (int i = 0; i < N; i++) {
+        printf("\nEnter details for Student %d:\n", i + 1);
+        readStudentDetails(&students[i]);
+        computeResults(&students[i]);
+    }
+
+    // Display details for each student
+    for (int i = 0; i < N; i++) {
+        printf("\nDetails for Student %d:\n", i + 1);
+        displayStudentDetails(students[i]);
+    }
+
+    return 0;
+}
